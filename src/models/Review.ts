@@ -1,14 +1,17 @@
-import mongoose , { Schema } from 'mongoose';
-import { IReview } from '../interfaces/ReviewModel';
-import ObjectId = module
-import * as module from "node:module";
+import mongoose, { Schema, Document } from 'mongoose';
 
-const reviewSchema = new Schema({
-    user: { type: String, required: true,ref:'User' },
+export interface IReview extends Document {
+    user: mongoose.Types.ObjectId;
+    rating: number;
+    comment: string;
+    product: mongoose.Types.ObjectId;
+}
+
+const reviewSchema = new Schema<IReview>({
+    user: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
     rating: { type: Number, required: true },
     comment: { type: String, required: true },
-    product: { type: ObjectId, required: true,ref:'Product' },
-
+    product: { type: Schema.Types.ObjectId, required: true, ref: 'Product' },
 }, { timestamps: true });
 
 const Review = mongoose.model<IReview>('Review', reviewSchema);

@@ -1,10 +1,10 @@
 // src/types/express/index.d.ts
-import { IUser } from '../../models/User';
+import {IUser} from "../../interfaces/UserModel";  // Kendi user modelinizi import edin
 
 declare global {
     namespace Express {
         interface Request {
-            user?: IUser;
+            user?: IUser;  // user özelliğini ekliyoruz
         }
     }
 }

@@ -52,3 +52,11 @@ export const updateProduct = async (id: string, updateData: Partial<IProduct>) =
 
     return await product.save();
 };
+
+export default {
+    getProducts,
+    getProductById,
+    deleteProduct,
+    createProduct,
+    updateProduct,
+};

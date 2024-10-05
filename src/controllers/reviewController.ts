@@ -1,7 +1,12 @@
 // src/controllers/reviewController.ts
 import { Request, Response } from 'express';
 import * as reviewService from '../services/reviewService';
+import {IUser} from "../interfaces/UserModel";
 
+
+interface IRequestWithUser extends Request {
+    user?: IUser;  // Burada user'ı ekliyoruz, geri kalan her şey `Request`'ten alınır
+}
 export const getReviews = async (req: Request, res: Response) => {
     try {
         const reviews = await reviewService.getReviews();
@@ -29,14 +34,23 @@ export const deleteReview = async (req: Request, res: Response) => {
     }
 };
 
-export const createReview = async (req: Request, res: Response) => {
+export const createReview = async (req: IRequestWithUser, res: Response) => {
     try {
-        const createdReview = await reviewService.createReview(req.user._id, req.params.id, req.body);
+        const userId = req.user?._id;
+        const productId = req.params.id;
+
+        // `userId` veya `productId` `undefined` ise hata döndür
+        if (!userId || !productId) {
+            return res.status(400).json({ message: 'User or Product ID is missing' });
+        }
+
+        const createdReview = await reviewService.createReview(userId, productId, req.body);
         res.status(201).json(createdReview);
     } catch (error) {
-        res.status(500).json({ message: error });
+        res.status(500).json({ message: error || 'Server Error' });
     }
 };
+
 
 export const updateReview = async (req: Request, res: Response) => {
     try {

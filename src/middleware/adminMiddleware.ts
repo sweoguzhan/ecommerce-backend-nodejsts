@@ -1,10 +1,15 @@
 // src/middleware/adminMiddleware.ts
 import { Request, Response, NextFunction } from 'express';
+import {IUser} from "../interfaces/UserModel";
 
-export const adminProtect = (req: Request, res: Response, next: NextFunction) => {
+interface IUserRequest extends Request {
+    user?: IUser;
+}
+
+export const adminProtect = (req: IUserRequest, res: Response, next: NextFunction) => {
     if (req.user && req.user.isAdmin) {
         next();
     } else {
-        res.status(403).json({ message: 'Bu işlemi sadece admin yetkisine sahip olanlar gerçekleştirebilir.' });
+        res.status(401).json({ message: 'Not authorized as an admin' });
     }
 };

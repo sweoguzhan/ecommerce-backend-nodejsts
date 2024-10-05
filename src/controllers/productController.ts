@@ -31,7 +31,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
 
 export const createProduct = async (req: Request, res: Response) => {
     try {
-        const createdProduct = await productService.createProduct(req.user._id);
+        const createdProduct = await productService.createProduct(req.body);
         res.status(201).json(createdProduct);
     } catch (error) {
         res.status(500).json({ message: error });
