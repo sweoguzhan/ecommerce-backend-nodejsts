@@ -4,4 +4,5 @@ export interface IUserRequest {
     surname: string;
     email: string;
     password: string;
+    
 }

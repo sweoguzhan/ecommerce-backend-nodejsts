@@ -1,21 +1,16 @@
 // src/models/User.ts
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, {Schema } from 'mongoose';
 import bcrypt from 'bcryptjs';
+import { IUser } from '../interfaces/UserModel';
 
-export interface IUser extends Document {
-    _id: string;  // _id'yi string olarak belirledik
-    name: string;
-    email: string;
-    password: string;
-    surname: string;
-    matchPassword(enteredPassword: string): Promise<boolean>;
-}
+
 
 const userSchema = new Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     surname: { type: String, required: true },
+    isAdmin: { type: Boolean, default: false },
 }, { timestamps: true });
 
 userSchema.pre('save', async function (next) {
