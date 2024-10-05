@@ -5,7 +5,7 @@ import { IUserRequest } from '../interfaces/UserRequest';
 
 export const createPaymentRequest = async (req: IUserRequest, res: Response) => {
     try {
-        const { productId } = req.body; // Assuming the product ID comes in the request body
+        const { productId } = req.body;
 
         const product = await productService.getProductById(productId);
 
