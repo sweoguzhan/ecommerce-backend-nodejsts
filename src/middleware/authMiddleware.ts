@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { Response, NextFunction } from 'express';
 import User from '../models/User';
-import {IUserRequest} from "../interfaces/UserRequest"; // Doğru interface'i ekleyin
+import {IUserRequest} from "../interfaces/UserRequest";
 
 export const protect = async (req: IUserRequest, res: Response, next: NextFunction): Promise<void> => {
     let token;
